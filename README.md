@@ -1,24 +1,20 @@
-# Lawrence P. Balazo — e-Professional Portfolio
+# Lawrence P. Balazo — e-Portfolio
 
-GitHub Pages-ready e-portfolio for the Workplace Communication assessment.
+A GitHub Pages e-portfolio for Workplace Communication, tailored toward an aspiring Junior Game Developer with a focus on game design and gameplay programming.
 
-## Files
-- `index.html` — main portfolio page
-- `style.css` — portfolio styling
-- `script.js` — mobile navigation
-- `resume.html` — one-page ATS-friendly resume
-- `resume.css` — resume print styling
-
-## GitHub Pages setup
-1. Create a new GitHub repository, for example `lawrence-balazo-eportfolio`.
-2. Upload all files to the repository root.
-3. Open **Settings → Pages**.
-4. Under **Build and deployment**, choose **Deploy from a branch**.
-5. Select the `main` branch and `/ (root)`, then save.
-6. Open the generated GitHub Pages URL.
-
-## Before final submission
-Replace `[username]`, `[profile]`, certification/training placeholders, project descriptions/links, and reference placeholders with your actual information.
+## Included
+- Professional profile
+- ATS-friendly, one-page-style resume
+- Three relevant work samples
+- Two STAR case studies
+- Two Sololearn certificates with certificate IDs redacted
+- Privacy and RA 10173 compliance note
+- Responsive, mobile-friendly navigation
+- Playable Choose Your Fate prototype
+- Source-code downloads for C projects
 
 ## Privacy
-Do not publish your home/street address, government IDs, certificate numbers, signatures, QR codes, or confidential records.
+This public portfolio intentionally omits home address, government/student IDs, certificate IDs, and other unnecessary sensitive information. The profile photo is included for professional/academic presentation at the owner's direction. No public form is provided to collect visitor personal information.
+
+## GitHub Pages
+Keep `index.html` in the repository root. The other files and the `assets` folder should remain in the same root-level structure so the project and certificate links work correctly.

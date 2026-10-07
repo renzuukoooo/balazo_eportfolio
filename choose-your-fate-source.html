@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Choose Your Fate</title>
+
+    <style>
+
+        /* =========================
+           PAGE
+        ========================= */
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+
+            font-family: Arial, sans-serif;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background: #171724;
+            color: white;
+        }
+
+
+        /* =========================
+           GAME BOX
+        ========================= */
+
+        .game {
+            width: 90%;
+            max-width: 650px;
+
+            padding: 30px;
+
+            background: #29293d;
+
+            border: 1px solid #41415c;
+
+            border-radius: 20px;
+
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+
+            text-align: center;
+        }
+
+
+        /* =========================
+           TITLE
+        ========================= */
+
+        h1 {
+            margin: 0 0 8px;
+
+            font-size: 34px;
+        }
+
+
+        .subtitle {
+            margin-top: 0;
+            margin-bottom: 25px;
+
+            color: #aaaabd;
+        }
+
+
+        /* =========================
+           STATS
+        ========================= */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns: repeat(3, 1fr);
+
+            gap: 10px;
+
+            margin-bottom: 20px;
+        }
+
+
+        .stat {
+            padding: 14px;
+
+            background: #35354d;
+
+            border-radius: 12px;
+        }
+
+
+        .stat-label {
+            color: #aaaabd;
+
+            font-size: 14px;
+        }
+
+
+        .stat-value {
+            margin-top: 5px;
+
+            font-size: 24px;
+
+            font-weight: bold;
+        }
+
+
+        /* =========================
+           SCENE
+        ========================= */
+
+        .scene {
+            padding: 25px;
+
+            margin-bottom: 20px;
+
+            background: #1e1e2d;
+
+            border-radius: 15px;
+
+            border: 1px solid #3b3b52;
+        }
+
+
+        #emoji {
+            font-size: 65px;
+
+            margin-bottom: 15px;
+        }
+
+
+        #message {
+            font-size: 18px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =========================
+           BUTTONS
+        ========================= */
+
+        .choices {
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 10px;
+        }
+
+
+        button {
+            padding: 15px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #5865f2;
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+
+        button:hover {
+            background: #6975f5;
+
+            transform: translateY(-2px);
+        }
+
+
+        button:active {
+            transform: translateY(0);
+        }
+
+
+        button:disabled {
+            background: #555566;
+
+            color: #999999;
+
+            cursor: not-allowed;
+
+            transform: none;
+        }
+
+
+        /* =========================
+           RESET
+        ========================= */
+
+        .reset {
+            width: 100%;
+
+            margin-top: 12px;
+
+            background: #d95353;
+        }
+
+
+        .reset:hover {
+            background: #e56565;
+        }
+
+
+        /* =========================
+           LOG
+        ========================= */
+
+        #log {
+            margin-top: 18px;
+
+            color: #9999aa;
+
+            font-size: 14px;
+
+            min-height: 20px;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 500px) {
+
+            .game {
+                width: 95%;
+
+                padding: 20px;
+            }
+
+            .choices {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 28px;
+            }
+
+            .stats {
+                gap: 5px;
+            }
+
+            .stat {
+                padding: 10px 5px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ==================================
+         HTML
+    =================================== -->
+
+    <div class="game">
+
+
+        <h1>
+            ⚔️ Choose Your Fate
+        </h1>
+
+
+        <p class="subtitle">
+            A completely normal adventure. Probably.
+        </p>
+
+
+        <!-- PLAYER STATS -->
+
+        <div class="stats">
+
+
+            <div class="stat">
+
+                <div class="stat-label">
+                    ❤️ Health
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="health">
+                    100
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-label">
+                    🪙 Coins
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="coins">
+                    10
+                </div>
+
+            </div>
+
+
+            <div class="stat">
+
+                <div class="stat-label">
+                    ⭐ Score
+                </div>
+
+                <div
+                    class="stat-value"
+                    id="score">
+                    0
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- GAME SCENE -->
+
+        <div class="scene">
+
+            <div id="emoji">
+                🚪
+            </div>
+
+
+            <div id="message">
+
+                You stand before three doors.
+
+                One contains treasure.
+
+                One contains danger.
+
+                One contains a very judgmental chicken.
+
+            </div>
+
+        </div>
+
+
+        <!-- CHOICES -->
+
+        <div class="choices">
+
+
+            <button id="leftButton">
+                🚪 Open Left Door
+            </button>
+
+
+            <button id="middleButton">
+                🚪 Open Middle Door
+            </button>
+
+
+            <button id="chickenButton">
+                🐔 Investigate Chicken
+            </button>
+
+
+            <button id="leaveButton">
+                🏃 Leave Like a Sensible Person
+            </button>
+
+
+        </div>
+
+
+        <!-- RESET -->
+
+        <button
+            class="reset"
+            id="resetButton">
+
+            🔄 Start New Adventure
+
+        </button>
+
+
+        <div id="log">
+
+            Choose wisely.
+
+            Or don't.
+
+            The code won't judge you.
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ==================================
+         JAVASCRIPT
+    =================================== -->
+
+    <script>
+
+
+        // =================================
+        // GAME VARIABLES
+        // =================================
+
+        let health = 100;
+
+        let coins = 10;
+
+        let score = 0;
+
+        let gameOver = false;
+
+
+
+        // =================================
+        // HTML ELEMENTS
+        // =================================
+
+        const healthText =
+            document.getElementById("health");
+
+        const coinsText =
+            document.getElementById("coins");
+
+        const scoreText =
+            document.getElementById("score");
+
+        const emoji =
+            document.getElementById("emoji");
+
+        const message =
+            document.getElementById("message");
+
+        const log =
+            document.getElementById("log");
+
+
+        const leftButton =
+            document.getElementById("leftButton");
+
+        const middleButton =
+            document.getElementById("middleButton");
+
+        const chickenButton =
+            document.getElementById("chickenButton");
+
+        const leaveButton =
+            document.getElementById("leaveButton");
+
+        const resetButton =
+            document.getElementById("resetButton");
+
+
+
+        // =================================
+        // UPDATE STATS
+        // =================================
+
+        function updateStats() {
+
+            healthText.textContent = health;
+
+            coinsText.textContent = coins;
+
+            scoreText.textContent = score;
+
+        }
+
+
+
+        // =================================
+        // RANDOM NUMBER
+        // =================================
+
+        function randomNumber() {
+
+            return Math.floor(Math.random() * 3);
+
+        }
+
+
+
+        // =================================
+        // SHOW MESSAGE
+        // =================================
+
+        function showMessage(icon, text) {
+
+            emoji.textContent = icon;
+
+            message.textContent = text;
+
+        }
+
+
+
+        // =================================
+        // DISABLE BUTTONS
+        // =================================
+
+        function disableButtons() {
+
+            leftButton.disabled = true;
+
+            middleButton.disabled = true;
+
+            chickenButton.disabled = true;
+
+            leaveButton.disabled = true;
+
+        }
+
+
+
+        // =================================
+        // ENABLE BUTTONS
+        // =================================
+
+        function enableButtons() {
+
+            leftButton.disabled = false;
+
+            middleButton.disabled = false;
+
+            chickenButton.disabled = false;
+
+            leaveButton.disabled = false;
+
+        }
+
+
+
+        // =================================
+        // LEFT DOOR
+        // =================================
+
+        function openLeftDoor() {
+
+
+            if (gameOver) {
+                return;
+            }
+
+
+            let result = randomNumber();
+
+
+            if (result === 0) {
+
+                coins += 50;
+
+                score += 20;
+
+
+                showMessage(
+                    "💰",
+                    "TREASURE! You found 50 coins. The economy is saved."
+                );
+
+
+                log.textContent =
+                    "You got lucky!";
+
+            }
+
+
+            else if (result === 1) {
+
+                health -= 20;
+
+                score += 5;
+
+
+                showMessage(
+                    "💥",
+                    "A trap! You lost 20 health. The door was clearly suspicious."
+                );
+
+
+                log.textContent =
+                    "Maybe inspect the door next time.";
+
+            }
+
+
+            else {
+
+                score += 10;
+
+
+                showMessage(
+                    "🍕",
+                    "You found a magical pizza. It doesn't restore health, but it looks delicious."
+                );
+
+
+                log.textContent =
+                    "Honestly, still a pretty good find.";
+
+            }
+
+
+            updateStats();
+
+            checkGame();
+
+        }
+
+
+
+        // =================================
+        // MIDDLE DOOR
+        // =================================
+
+        function openMiddleDoor() {
+
+
+            if (gameOver) {
+                return;
+            }
+
+
+            let result = randomNumber();
+
+
+            if (result === 0) {
+
+                coins += 100;
+
+                score += 40;
+
+
+                showMessage(
+                    "👑",
+                    "You found the legendary treasure! Please remain humble."
+                );
+
+
+                log.textContent =
+                    "You are becoming suspiciously rich.";
+
+            }
+
+
+            else if (result === 1) {
+
+                health -= 35;
+
+
+                showMessage(
+                    "👹",
+                    "A tiny goblin attacks you. It is surprisingly athletic."
+                );
+
+
+                log.textContent =
+                    "Never underestimate a small goblin.";
+
+            }
+
+
+            else {
+
+                coins += 5;
+
+                score += 15;
+
+
+                showMessage(
+                    "🧦",
+                    "You found five coins and a mysterious sock. A balanced outcome."
+                );
+
+
+                log.textContent =
+                    "The dungeon has many unanswered questions.";
+
+            }
+
+
+            updateStats();
+
+            checkGame();
+
+        }
+
+
+
+        // =================================
+        // CHICKEN
+        // =================================
+
+        function investigateChicken() {
+
+
+            if (gameOver) {
+                return;
+            }
+
+
+            let result = randomNumber();
+
+
+            if (result === 0) {
+
+                coins += 25;
+
+                score += 25;
+
+
+                showMessage(
+                    "🐔",
+                    "The chicken approves of you and gives you 25 coins. Never question it."
+                );
+
+
+                log.textContent =
+                    "The chicken seems to like you.";
+
+            }
+
+
+            else if (result === 1) {
+
+                health -= 10;
+
+                score += 10;
+
+
+                showMessage(
+                    "🐔💢",
+                    "You disturbed the chicken. You have made a powerful enemy."
+                );
+
+
+                log.textContent =
+                    "You have angered the chicken.";
+
+            }
+
+
+            else {
+
+                score += 20;
+
+
+                showMessage(
+                    "🐔👑",
+                    "The chicken crowns you ruler of the dungeon."
+                );
+
+
+                log.textContent =
+                    "Long live the chicken's chosen one.";
+
+            }
+
+
+            updateStats();
+
+            checkGame();
+
+        }
+
+
+
+        // =================================
+        // LEAVE
+        // =================================
+
+        function leaveDungeon() {
+
+
+            if (gameOver) {
+                return;
+            }
+
+
+            score += 5;
+
+            gameOver = true;
+
+
+            showMessage(
+                "🏃",
+                "You leave the dungeon safely. Sometimes survival is the real treasure."
+            );
+
+
+            log.textContent =
+                "Adventure complete. Your legend will probably be exaggerated.";
+
+
+            disableButtons();
+
+            updateStats();
+
+        }
+
+
+
+        // =================================
+        // CHECK GAME
+        // =================================
+
+        function checkGame() {
+
+
+            if (health <= 0) {
+
+                health = 0;
+
+                gameOver = true;
+
+
+                showMessage(
+                    "💀",
+                    "Your health reached zero. The dungeon has won. The chicken sends its regards."
+                );
+
+
+                log.textContent =
+                    "GAME OVER! Better luck next time.";
+
+
+                disableButtons();
+
+            }
+
+
+            else if (score >= 100) {
+
+                gameOver = true;
+
+
+                showMessage(
+                    "🏆",
+                    "You reached 100 points! You are officially too powerful for this dungeon."
+                );
+
+
+                log.textContent =
+                    "YOU WIN! The dungeon fears your name.";
+
+
+                disableButtons();
+
+            }
+
+
+            updateStats();
+
+        }
+
+
+
+        // =================================
+        // RESTART
+        // =================================
+
+        function restartGame() {
+
+
+            health = 100;
+
+            coins = 10;
+
+            score = 0;
+
+            gameOver = false;
+
+
+            showMessage(
+                "🚪",
+                "You stand before three doors. One contains treasure. One contains danger. One contains a very judgmental chicken."
+            );
+
+
+            log.textContent =
+                "Choose wisely. Or don't. The code won't judge you.";
+
+
+            enableButtons();
+
+            updateStats();
+
+        }
+
+
+
+        // =================================
+        // BUTTON EVENTS
+        // =================================
+
+        leftButton.addEventListener(
+            "click",
+            openLeftDoor
+        );
+
+
+        middleButton.addEventListener(
+            "click",
+            openMiddleDoor
+        );
+
+
+        chickenButton.addEventListener(
+            "click",
+            investigateChicken
+        );
+
+
+        leaveButton.addEventListener(
+            "click",
+            leaveDungeon
+        );
+
+
+        resetButton.addEventListener(
+            "click",
+            restartGame
+        );
+
+
+
+        // =================================
+        // START
+        // =================================
+
+        updateStats();
+
+
+    </script>
+
+</body>
+
+</html> 
